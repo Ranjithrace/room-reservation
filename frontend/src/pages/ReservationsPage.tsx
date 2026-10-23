@@ -44,7 +44,14 @@ function localInputValue(value: string) {
 }
 
 function displayDate(value: string) {
-    return new Date(value).toLocaleString()
+    return new Date(value).toLocaleString(undefined, {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false,
+    })
 }
 
 function errorMessage(reason: unknown) {

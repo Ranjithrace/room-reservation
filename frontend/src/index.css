@@ -24,3 +24,10 @@ body {
 fieldset {
     min-width: 0;
 }
+
+/* Keep tables readable on small screens. */
+@media (max-width: 575.98px) {
+    .table-responsive > .table {
+        min-width: 760px;
+    }
+}
