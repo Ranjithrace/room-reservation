@@ -1,0 +1,19 @@
+@HostAddress = http://localhost:5080
+
+### List rooms
+GET {{HostAddress}}/api/rooms
+Accept: application/json
+
+### Filter rooms by capacity
+GET {{HostAddress}}/api/rooms?minCapacity=6
+Accept: application/json
+
+### List users
+GET {{HostAddress}}/api/users
+Accept: application/json
+
+### List reservations
+GET {{HostAddress}}/api/reservations
+Accept: application/json
+
+###

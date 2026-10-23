@@ -1,0 +1,26 @@
+body {
+    margin: 0;
+    min-width: 320px;
+    background: #f4f6fa;
+    color: #192438;
+    font-family: Arial, sans-serif;
+}
+
+.app-header {
+    background: #172b4d;
+    color: white;
+}
+
+.room-card {
+    border: 1px solid #e0e6ef;
+    border-radius: 14px;
+}
+
+.equipment-badge {
+    background: #edf2ff;
+    color: #284b89;
+}
+
+fieldset {
+    min-width: 0;
+}
