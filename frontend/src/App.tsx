@@ -10,50 +10,87 @@ const pages: { id: Page; label: string }[] = [
     { id: 'rooms', label: 'Rooms' },
     { id: 'users', label: 'Users' },
     { id: 'reservations', label: 'Reservations' },
-    { id: 'usage', label: 'Usage' },
+    { id: 'usage', label: 'Usage report' },
 ]
 
 export default function App() {
     const [page, setPage] = useState<Page>('rooms')
 
-
     return (
         <>
-            <header className="app-header py-4 mb-4">
-                <div className="container">
-                    <h1 className="h3 mb-1">Room Reservation</h1>
-                    <p className="mb-0 opacity-75">
-                        Office meeting room booking
-                    </p>
+            <a className="skip-link" href="#main-content">
+                Skip to content
+            </a>
+
+            <header className="app-header">
+                <div className="container app-header-inner">
+                    <div className="app-brand">
+                        <span className="app-brand-mark" aria-hidden="true">
+                            <svg
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="1.7"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                            >
+                                <rect x="4" y="5" width="16" height="16" rx="3" />
+                                <path d="M8 3v4M16 3v4M4 11h16M8 15h3M8 18h6" />
+                            </svg>
+                        </span>
+
+                        <div>
+                            <h1>Room Reservation</h1>
+                            <p>Office meeting spaces</p>
+                        </div>
+                    </div>
+
+                    <span className="app-header-label">
+                        Workspace booking
+                    </span>
                 </div>
             </header>
 
-            <main className="container pb-5">
-                <nav
-                    aria-label="Main navigation"
-                    className="d-flex flex-wrap gap-2 border-bottom pb-3 mb-4"
-                >
-                    {pages.map(item => (
-                        <button
-                            key={item.id}
-                            type="button"
-                            className={`btn ${page === item.id
-                                    ? 'btn-primary'
-                                    : 'btn-outline-primary'
+            <div className="app-navigation">
+                <div className="container">
+                    <nav className="app-tabs" aria-label="Main navigation">
+                        {pages.map(item => (
+                            <button
+                                key={item.id}
+                                type="button"
+                                className={`app-tab ${
+                                    page === item.id ? 'is-active' : ''
                                 }`}
-                            aria-current={page === item.id ? 'page' : undefined}
-                            onClick={() => setPage(item.id)}
-                        >
-                            {item.label}
-                        </button>
-                    ))}
-                </nav>
+                                aria-current={
+                                    page === item.id ? 'page' : undefined
+                                }
+                                onClick={() => setPage(item.id)}
+                            >
+                                {item.label}
+                            </button>
+                        ))}
+                    </nav>
+                </div>
+            </div>
 
+            <main
+                id="main-content"
+                className="container app-main"
+                tabIndex={-1}
+            >
                 {page === 'rooms' && <RoomsPage />}
                 {page === 'users' && <UsersPage />}
                 {page === 'reservations' && <ReservationsPage />}
                 {page === 'usage' && <UsagePage />}
             </main>
+
+            <footer className="container app-footer">
+                Room Reservation
+                <span aria-hidden="true"> / </span>
+                Meeting management and recorded usage
+            </footer>
         </>
     )
 }
