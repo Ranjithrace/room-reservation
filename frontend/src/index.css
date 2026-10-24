@@ -417,3 +417,65 @@ legend {
         line-height: 1.8;
     }
 }
+
+.room-calendar-scroll {
+    overflow-x: auto;
+}
+
+.room-calendar-grid {
+    min-width: 1200px;
+    padding: 0 20px;
+}
+
+.room-calendar-axis {
+    position: relative;
+    height: 35px;
+    border-bottom: 1px solid #dce2eb;
+}
+
+.room-calendar-axis > span {
+    position: absolute;
+    top: 4px;
+    transform: translateX(-50%);
+    color: #65748b;
+    font-size: 0.7rem;
+}
+
+.room-calendar-entry {
+    padding: 16px 0;
+    border-bottom: 1px solid #e8ecf2;
+}
+
+.room-calendar-entry:last-child {
+    border-bottom: 0;
+}
+
+.room-calendar-details {
+    margin-bottom: 10px;
+    overflow-wrap: anywhere;
+}
+
+.room-calendar-details > .badge {
+    margin-left: 10px;
+}
+
+.room-calendar-track {
+    position: relative;
+    height: 30px;
+    border: 1px solid #dce2eb;
+    border-radius: 5px;
+    background: #f2f5fa;
+}
+
+.room-calendar-bar {
+    position: absolute;
+    top: 4px;
+    bottom: 4px;
+    min-width: 2px;
+    border-radius: 3px;
+    background: #315fd3;
+}
+
+.room-calendar-bar.is-completed {
+    background: #35806b;
+}

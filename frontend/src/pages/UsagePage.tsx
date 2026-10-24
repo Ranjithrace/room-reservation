@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import type { FormEvent } from 'react'
 import { getJson } from '../api'
 import type { RoomUsage } from '../types'
+import { exportUsagePdf } from '../exportUsagePdf'
 
 function localDateValue(date: Date) {
     const pad = (value: number) => String(value).padStart(2, '0')
@@ -42,6 +43,28 @@ export default function UsagePage() {
     const [error, setError] = useState('')
     const [validationError, setValidationError] = useState('')
     const [reload, setReload] = useState(0)
+
+    const [exporting, setExporting] = useState(false)
+    const [exportError, setExportError] = useState('')
+
+    async function downloadReport() {
+        if (loading || error || rows.length === 0 || exporting) {
+            return
+        }
+
+        setExporting(true)
+        setExportError('')
+
+        try {
+            await exportUsagePdf(rows, query)
+        } catch {
+            setExportError(
+                'Could not export the report. Please try again.',
+            )
+        } finally {
+            setExporting(false)
+        }
+    }
 
     function refreshReport() {
         setLoading(true)
@@ -104,9 +127,31 @@ export default function UsagePage() {
 
     return (
         <section aria-labelledby="usage-heading">
-            <h2 id="usage-heading" className="h3">
-                Room usage
-            </h2>
+                        <div className="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-3">
+                <h2 id="usage-heading" className="h3 mb-0">
+                    Room usage
+                </h2>
+
+                <button
+                    type="button"
+                    className="btn btn-outline-primary"
+                    disabled={
+                        loading ||
+                        Boolean(error) ||
+                        rows.length === 0 ||
+                        exporting
+                    }
+                    onClick={downloadReport}
+                >
+                    {exporting ? 'Exporting...' : 'Export PDF'}
+                </button>
+            </div>
+
+            {exportError && (
+                <div className="alert alert-danger" role="alert">
+                    {exportError}
+                </div>
+            )}
             <p className="text-secondary">
                 Compare scheduled time with recorded usage for finished meetings.
             </p>

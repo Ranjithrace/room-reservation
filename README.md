@@ -12,6 +12,7 @@ Users can browse rooms, manage reservations, and compare scheduled meeting time 
 - Vite
 - Bootstrap
 - xUnit
+- jsPDF and jsPDF-AutoTable for PDF export
 
 ## Prerequisites
 
@@ -171,6 +172,18 @@ Reservation statuses are `Booked`, `Completed`, and `Cancelled`.
 
 An ongoing meeting remains `Booked` until it finishes. Check-in is recorded separately.
 
+### Room calendar
+
+- View a selected room's bookings on a daily timeline.
+- Choose a date or navigate with Previous day, Next day, and Today.
+- Display booking titles, organizers, attendees, scheduled times, and statuses.
+- Exclude cancelled reservations.
+- Clip timeline bars to the selected day for meetings crossing midnight.
+- Display times in the browser's local time zone.
+- Scroll the timeline horizontally on smaller screens.
+
+The timeline displays scheduled booking intervals, not actual recorded usage.
+
 ### Usage report
 
 - Display completed reservation counts for each room.
@@ -178,6 +191,7 @@ An ongoing meeting remains `Booked` until it finishes. Check-in is recorded sepa
 - Compare scheduled minutes with recorded usage minutes.
 - Calculate recorded usage as a percentage of scheduled time.
 - Filter by a reporting period, including the entire selected final day.
+- Export the displayed report to PDF, including its applied reporting period, room data, and usage notes.
 
 ## Booking rules
 
@@ -214,12 +228,14 @@ Duration and advance-booking limits are configured in:
 
 `backend/RoomReservation.Api/RoomReservation.Api/appsettings.json`
 
-The following section belongs inside that file's root JSON object:
+Add or update the BookingRules section inside appsettings.json, preserving its other settings:
 
 ```json
-"BookingRules": {
-  "MaxDurationDays": 7,
-  "MaxAdvanceBookingDays": 90
+{
+  "BookingRules": {
+    "MaxDurationDays": 7,
+    "MaxAdvanceBookingDays": 90
+  }
 }
 ```
 
@@ -314,7 +330,8 @@ A shared semaphore serializes reservation writes within one backend process so c
 ### Frontend
 
 - `App.tsx`: page navigation
-- `pages`: Rooms, Users, Reservations, and Usage components
+- `pages`: Rooms, Users, Reservations, Calendar, and Usage components
+- `exportUsagePdf.ts`: PDF generation using backend-calculated report values
 - `api.ts`: shared API request handling
 - `types.ts`: TypeScript data definitions
 - `index.css`: application styling
@@ -330,7 +347,7 @@ Booking validation, active reservation counts, and usage calculations are implem
 - EF Core InMemory provides temporary storage and is not a production database.
 - Multiple backend instances would require shared database concurrency control.
 - Usage relies on manual check-in and documented assumptions.
-- Calendar/timeline view and PDF export are not implemented; both are optional task features.
+- The calendar provides a daily timeline; a weekly view is not implemented.
 
 ## Troubleshooting
 
@@ -375,6 +392,11 @@ A fresh GitHub clone successfully completed:
 After aligning the launch profile and adding the test project to the solution, all 25 tests passed again and the backend successfully served `/api/rooms` on port 5080.
 
 Visual Studio startup instructions are provided from the configured launch profile. The Visual Studio Run button itself has not been independently verified.
+
+After adding the daily calendar and PDF export, the frontend production build
+and lint checks passed with zero warnings or errors. The calendar was visually
+checked using seeded Kaunas and Vilnius meetings, and an exported PDF was
+reviewed for layout and sample report values.
 
 ## Author
 

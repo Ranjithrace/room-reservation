@@ -3,13 +3,15 @@ import RoomsPage from './pages/RoomsPage'
 import UsersPage from './pages/UsersPage'
 import ReservationsPage from './pages/ReservationsPage'
 import UsagePage from './pages/UsagePage'
+import CalendarPage from './pages/CalendarPage'
 
-type Page = 'rooms' | 'users' | 'reservations' | 'usage'
+type Page = 'rooms' | 'users' | 'reservations' | 'calendar' | 'usage'
 
 const pages: { id: Page; label: string }[] = [
     { id: 'rooms', label: 'Rooms' },
     { id: 'users', label: 'Users' },
     { id: 'reservations', label: 'Reservations' },
+    { id: 'calendar', label: 'Calendar' },
     { id: 'usage', label: 'Usage report' },
 ]
 
@@ -83,6 +85,7 @@ export default function App() {
                 {page === 'rooms' && <RoomsPage />}
                 {page === 'users' && <UsersPage />}
                 {page === 'reservations' && <ReservationsPage />}
+		{page === 'calendar' && <CalendarPage />}
                 {page === 'usage' && <UsagePage />}
             </main>
 
