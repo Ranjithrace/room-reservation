@@ -348,6 +348,7 @@ Booking validation, active reservation counts, and usage calculations are implem
 - Multiple backend instances would require shared database concurrency control.
 - Usage relies on manual check-in and documented assumptions.
 - The calendar provides a daily timeline; a weekly view is not implemented.
+- PDF export uses a standard font and currently supports the seeded room names. Full Unicode support, including Lithuanian accented characters, requires an embedded font.
 
 ## Troubleshooting
 
